@@ -15,6 +15,10 @@ const COLORS = [
   "purple"
 ];
 
+let firstCard = null; // var to store the first card clicked 
+let seconCard = null; // var to store second card clicked
+let canFlip = true; // flag to track if cards can be flipped 
+
 // helper function to shuiffle an array using fisher-yates algor
 function shuffle(array) {
   let counter = array.length;
@@ -60,13 +64,53 @@ function createDivsForColors(colorArray) {
 
 // TODO: Implement this function!
 function handleCardClick(event) {
-  // you can use event.target to see which element was clicked
-  console.log("you just clicked", event.target);
+  // check if card flipping is currently allowed
+  if (!canFlip) {
+    // prevents further card flips if alrerady flipping or matching
+    return;  
+  }
 
-  // const var determines which div(card) was clicked using event.target
   const clickedDiv = event.target;
-  // change the color of card clicked to its classname (color)
+
+  // ignores clicked on already matched cards
+  if (clickedDiv.classList.contains('matched')){
+    return;
+  }
+
+  // toggle the background color of the clicked div to show the color
   clickedDiv.style.backgroundColor = clickedDiv.classList[0];
+
+  // determine which card (first or second) is being clicked based on curr state
+  if(!firstCard){
+    firstCard = clickedDiv; // assign the first clicked card
+  } 
+  else if (!seconCard) {
+    seconCard = clickedDiv; // assign the second clicked card
+
+    // checks if the color of first and second card match
+    if (firstCard.classList[0] === seconCard.classList[0]) {
+      firstCard.classList.add('matched');
+      seconCard.classList.add('matched');
+    }
+
+    // reset first and second card after a short delay
+    setTimeout(() => {
+      // checks if cards are matched before resetting backgroun coolor
+      if (!firstCard.classList.contains('matched')){
+        firstCard.style.backgroundColor = '';
+      }
+      if (!seconCard.classList.contains('matched')){
+        seconCard.style.backgroundColor = '';
+      }
+
+      // reset first card adn second card var
+      firstCard = null;
+      seconCard = null;
+      canFlip = true; // allow flipping again after cards are reset
+    }, 1000);
+
+    canFlip = false; // prevents futher card flips until current ones are resolved
+  }
 }
 
 // when the DOM loads

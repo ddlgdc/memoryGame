@@ -1,0 +1,12 @@
+1st commit :
+in the first commit, i completed the ability 
+to change the divs background colors when they
+are clicked with an event listner. 
+
+2nd commit :
+second commit consist of changes done to the 
+handleclick function. we added changes to allow
+same colored cards to remain showing once they 
+are matched. if not matched, the color of the 
+cards are removed within 1 secobnd as 
+instructed. 
