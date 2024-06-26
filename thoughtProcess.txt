@@ -11,4 +11,9 @@ are matched. if not matched, the color of the
 cards are removed within 1 secobnd as 
 instructed. 
 
-3rd commit 
+3rd commit :
+in this 3rd commit, changes to the JS, HTML and 
+CSS file consist of adding a button element in 
+order to start the game and reveal the game board. 
+Another button is later shown to restart the game
+board when desired. 

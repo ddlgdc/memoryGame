@@ -2,6 +2,7 @@
 const gameContainer = document.getElementById("game");
 const startButton = document.getElementById('start-button');
 const restartButton = document.getElementById('restart-button');
+const scoreElement = document.getElementById('score');
 
 // array of colors for each game card , color repeated twice 
 const COLORS = [
@@ -20,6 +21,7 @@ const COLORS = [
 let firstCard = null; // var to store the first card clicked 
 let secondCard = null; // var to store second card clicked
 let canFlip = true; // flag to track if cards can be flipped 
+let score = 0; // variable to track of the score
 
 // helper function to shuiffle an array using fisher-yates algor
 function shuffle(array) {
@@ -50,7 +52,7 @@ let shuffledColors = shuffle(COLORS);
 function createDivsForColors(colorArray) {
   // clear the game container 
   gameContainer.innerHTML = '';
-  
+
   // loop through each color in colorArray
   for (let color of colorArray) {
     // creates a new div element fopr each color
@@ -78,9 +80,10 @@ function handleCardClick(event) {
   const clickedDiv = event.target;
 
   // ignores clicked on already matched cards
-  if (clickedDiv.classList.contains('matched')){
-    return;
-  }
+  if (clickedDiv.classList.contains('matched')) return;
+
+  score++;
+  scoreElement.textContent = score;
 
   // toggle the background color of the clicked div to show the color
   clickedDiv.style.backgroundColor = clickedDiv.classList[0];
@@ -130,4 +133,6 @@ restartButton.addEventListener('click', function(){
   firstCard = null; // reset first card
   secondCard = null; // reset second card
   canFlip = true; // allow flipping again
+  score = 0; // reset score 
+  scoreElement.textContent = score; // updates score display
 }); 
