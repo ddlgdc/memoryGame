@@ -10,3 +10,5 @@ same colored cards to remain showing once they
 are matched. if not matched, the color of the 
 cards are removed within 1 secobnd as 
 instructed. 
+
+3rd commit 

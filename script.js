@@ -1,5 +1,7 @@
 // get the game container element fro dom 
 const gameContainer = document.getElementById("game");
+const startButton = document.getElementById('start-button');
+const restartButton = document.getElementById('restart-button');
 
 // array of colors for each game card , color repeated twice 
 const COLORS = [
@@ -16,7 +18,7 @@ const COLORS = [
 ];
 
 let firstCard = null; // var to store the first card clicked 
-let seconCard = null; // var to store second card clicked
+let secondCard = null; // var to store second card clicked
 let canFlip = true; // flag to track if cards can be flipped 
 
 // helper function to shuiffle an array using fisher-yates algor
@@ -46,6 +48,9 @@ let shuffledColors = shuffle(COLORS);
 
 // func to create divs for each color in shuffledCOlors arr
 function createDivsForColors(colorArray) {
+  // clear the game container 
+  gameContainer.innerHTML = '';
+  
   // loop through each color in colorArray
   for (let color of colorArray) {
     // creates a new div element fopr each color
@@ -84,13 +89,13 @@ function handleCardClick(event) {
   if(!firstCard){
     firstCard = clickedDiv; // assign the first clicked card
   } 
-  else if (!seconCard) {
-    seconCard = clickedDiv; // assign the second clicked card
+  else if (!secondCard) {
+    secondCard = clickedDiv; // assign the second clicked card
 
     // checks if the color of first and second card match
-    if (firstCard.classList[0] === seconCard.classList[0]) {
+    if (firstCard.classList[0] === secondCard.classList[0]) {
       firstCard.classList.add('matched');
-      seconCard.classList.add('matched');
+      secondCard.classList.add('matched');
     }
 
     // reset first and second card after a short delay
@@ -99,21 +104,30 @@ function handleCardClick(event) {
       if (!firstCard.classList.contains('matched')){
         firstCard.style.backgroundColor = '';
       }
-      if (!seconCard.classList.contains('matched')){
-        seconCard.style.backgroundColor = '';
+      if (!secondCard.classList.contains('matched')){
+        secondCard.style.backgroundColor = '';
       }
 
       // reset first card adn second card var
       firstCard = null;
-      seconCard = null;
+      secondCard = null;
       canFlip = true; // allow flipping again after cards are reset
     }, 1000);
 
     canFlip = false; // prevents futher card flips until current ones are resolved
   }
 }
-
-// when the DOM loads
-document.addEventListener('DOMContentLoaded', function() {
+startButton.addEventListener('click', function(){
+  gameContainer.style.display = 'block';
+  startButton.style.display = 'none'; // hides start button
+  restartButton.style.display = 'inline'; // show restart button
   createDivsForColors(shuffledColors);
 });
+
+restartButton.addEventListener('click', function(){
+  shuffledColors = shuffle(COLORS); // reshuffle colors
+  createDivsForColors(shuffledColors); // recreate the divs
+  firstCard = null; // reset first card
+  secondCard = null; // reset second card
+  canFlip = true; // allow flipping again
+}); 
